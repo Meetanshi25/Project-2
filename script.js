@@ -9,7 +9,7 @@ const displayMessage = function (message) {
   document.querySelector('.message').textContent = message;
 };
 
-document.querySelector('.check').addEventListener('click', function () {
+const checknumber = function () {
   const guess = Number(document.querySelector('.guess').value);
 
   console.log(guess, typeof guess);
@@ -28,6 +28,8 @@ document.querySelector('.check').addEventListener('click', function () {
     if (score > highscore) {
       highscore = score;
       document.querySelector('.highscore').textContent = highscore;
+
+      modal.classList.remove('hidden');
     }
   } else {
     //guess not equal to the number
@@ -41,6 +43,27 @@ document.querySelector('.check').addEventListener('click', function () {
       }
     }
   }
+};
+
+//Modal-Working
+
+const modal = document.querySelector('.modal');
+const overlay = document.querySelector('.overlay');
+const btnCloseModal = document.querySelector('.close-modal');
+
+const hide = function () {
+  modal.classList.add('hidden');
+  overlay.classList.add('hidden');
+};
+
+const open = function () {
+  modal.classList.remove('hidden');
+  overlay.classList.remove('hidden');
+};
+
+document.querySelector('.check').addEventListener('click', checknumber);
+document.addEventListener('keydown', function (e) {
+  if (e.key === 'Enter') checknumber();
 });
 
 //again button
@@ -55,4 +78,12 @@ document.querySelector('.again').addEventListener('click', function () {
 
   document.querySelector('body').style.backgroundColor = '#222';
   document.querySelector('.number').style.width = '15rem';
+});
+
+// for closing modal
+
+btnCloseModal.addEventListener('click', hide);
+
+document.addEventListener('keydown', function (e) {
+  if (e.key === 'Escape' && !modal.classList.contains('hidden')) hide();
 });
